@@ -1,36 +1,41 @@
 export class Game {
+
   constructor() {
-    this.tiradas = []
-  }
-  tirar(bolos) {
-    this.tiradas.push(bolos)
-  }
-  calcularPuntuacion() {
-    let puntuacion = 0
-    let indiceTiradas = 0
-    for (let indiceJugada = 0; indiceJugada < 10; indiceJugada++) {
-      if (this.esSemipleno(indiceTiradas)) {
-        puntuacion += this.calcularPuntuacionSemipleno(indiceTiradas)
-      } else {
-        puntuacion += this.calcularPuntuacionJugadaNormal(indiceTiradas)
-      }
-      indiceTiradas += 2
+    this.plays = []
+    this.score = 0;
+    this.turns = 20;
+    this.states = {
+      pending: 0,
+      inProgress:  1
     }
-    return puntuacion
+    this.currentPlay = {
+      status: this.states.pending,
+      bowls: 10,
+      first: 0,
+      last: 0,
+      bonus: 0
+    };
   }
 
-  esSemipleno(indiceTirada) {
-    return this.tiradas[indiceTirada] + this.tiradas[indiceTirada + 1] === 10
+  play() {
+    return this.currentPlay
   }
 
-  calcularPuntuacionSemipleno(indiceTirada) {
-    return (
-      this.tiradas[indiceTirada] +
-      this.tiradas[indiceTirada + 1] +
-      this.tiradas[indiceTirada + 2]
-    )
+  getCurrentPlay() {
+    return this.currentPlay
   }
-  calcularPuntuacionJugadaNormal(indiceTirada) {
-    return this.tiradas[indiceTirada] + this.tiradas[indiceTirada + 1]
+
+  resetCurrentPlay() {
+    this.currentPlay = {
+      status: this.states.pending,
+      bowls: 10,
+      first: 0,
+      last: 0,
+      bonus: 0
+    };
+  }
+
+  getScore() {
+    return this.score;
   }
 }
